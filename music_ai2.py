@@ -14,6 +14,15 @@ prompt = "A cheerful ukulele strumming in a beachside jam."
 
 generator = torch.Generator("cpu").manual_seed(0)
 
+audio = pipe(
+    prompt,
+    audio_length_in_s = 10.24,
+    generator = generator,
+).audios[0]
+
+from IPython.display import Audio
+Audio(audio, rate = 16000)
+
 def create_music(prompt):
   negative_prompt = "Low quality"
   audio = pipe(
@@ -23,6 +32,18 @@ def create_music(prompt):
     generator = generator,
   ).audios[0]
   return 16000, audio
+
+negative_prompt = "Low quality"
+
+audio = pipe(
+    prompt,
+    negative_prompt = negative_prompt,
+    audio_length_in_s = 10.24,
+    generator = generator,
+).audios[0]
+
+from IPython.display import Audio
+Audio(audio, rate = 16000)
 
 interface = gr.Interface(
     title = "Music Generation App",
